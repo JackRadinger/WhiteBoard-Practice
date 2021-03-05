@@ -84,3 +84,82 @@
 // another binary tree.
 // ## Problem 7: Reverse a Linked List
 // Write a function that will reverse a singly linked list.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ## Problem 1: Breadth First Search on a Graph
+// Given the adjacency list below, how many friends would Joe visit if he were
+// trying to get to Jesse using Breadth-First Traversal?
+// NOTE: your function should return the number of friends visited, not including
+// Joe himself
+// ```javascript
+
+const adjacencyList = {
+  'derek':['selam', 'dean'],
+  'joe':['selam'],
+  'selam': ['derek', 'joe', 'dean', 'evan'],
+  'dean': ['derek', 'evan', 'selam'],
+  'sam': ['jen'],
+  'evan': ['selam', 'jesse', 'dean'],
+  'jen':['sam', 'javier'],
+  'javier':['jen'],
+  'chris':[],
+  'jesse': ['evan'],
+};
+
+function bfsSearch(adjacencyList, startingValue, targetValue) {
+    if (!adjacencyList[startingValue].length) return null; 
+    let visited = new Set();
+    let distance = 0;
+    let queue = [startingValue];
+
+    while(queue.length) {
+        let node = queue.shift();
+        if(visited.has(node)) continue;
+        visited.add(node);
+        if(node === targetValue) return distance;
+        else distance++;  //2
+        let neighbors = adjacencyList[node];
+        queue.push(...neighbors);        
+    }
+}
+
+
+
+
