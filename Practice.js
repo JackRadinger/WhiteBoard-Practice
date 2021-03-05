@@ -108,20 +108,41 @@ const adjacencyList = {
 
 
 function bfsSearch(adjacencyList, startingValue, targetValue) {
-    if(!adjacencyList[startingValue].length) return null;
-    let visited = new Set();
-    let distance = 0;
-    let queue = [startingValue];
-
+  //make sure first person has friends  
+  if(!adjacencyList[startingValue].length) return null;
+  
+  //created set to check and prevent infinite loop  
+  let visited = new Set();
+  
+  //count distance
+  let distance = 0;
+  
+  //create queue to search through for targetValue and begin with startingValue as root
+  let queue = [startingValue];
+  
+    //create while loop that runs so long as there are items in the queue
     while(queue.length) {
-        let node = queue.shift();
-        if(visited.has(node)) continue;
-        visited.add(node);
-        if(node === targetValue) return distance;
-        distance++;
-        let neighbors = adjacencyList[node];
-        queue.push(...neighbors)
+      //remove first name from queue and use for iteration
+      let node = queue.shift();
+      
+      //if name was already checked, skip to next name
+      if(visited.has(node)) continue;
+
+      //add name to visited list to prevent infinite loop
+      visited.add(node);
+
+      //check if name for current iteration is the target. If so, return the distance
+      if(node === targetValue) return distance;
+
+      //increment the distance counter
+      distance++;
+
+      //grab the current name and add that person's friends to the queue
+      let neighbors = adjacencyList[node];
+      queue.push(...neighbors)
     }
+
+    //EDGE CASE: if the queue has been emptied AND the target was not friends with anyone, return null sinc ethat person is not friends with anyone in our adjacencyList
     return null;
 }
 
@@ -182,3 +203,35 @@ function dfsSearch(adjacencyList, start, target) {
 // //  /  \      \
 // // 7    2      1
 // ```
+
+
+//start with writing depth function that adds current node value to total
+//add base case since it's going to be recursive
+//check if any of the possible combinations === sum
+//return true/false
+
+
+
+function checker(root, sum, total = 0) {
+  if(!root) return false;
+  if(total === sum) return true;
+  let curr = root;
+  total = total + root.val;
+
+  let left = checker(root.left, sum, total);
+  let right = checker(root.right, sum, total);
+
+  if(left === true) return true
+  if(right === true) return true
+  else return false;
+    //if total !== sum, return recursion
+
+
+  // if(root !== null) {
+  //   let left = checker(root.left, sum, total);
+  //   let right = checker(root.right, sum, total);
+  //   if(root.left === null) return total = root.value;
+  //   if(root.right === null) return total = root.value;
+
+  // }
+}
