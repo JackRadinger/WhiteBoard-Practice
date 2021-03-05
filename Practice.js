@@ -84,3 +84,101 @@
 // another binary tree.
 // ## Problem 7: Reverse a Linked List
 // Write a function that will reverse a singly linked list.
+
+
+// ## Problem 1: Breadth First Search on a Graph
+// Given the adjacency list below, how many friends would Joe visit if he were
+// trying to get to Jesse using Breadth-First Traversal?
+// NOTE: your function should return the number of friends visited, not including
+// Joe himself
+// ```javascript
+
+const adjacencyList = {
+  'derek':['selam', 'dean'],
+  'joe':['selam'],
+  'selam': ['derek', 'joe', 'dean', 'evan'],
+  'dean': ['derek', 'evan', 'selam'],
+  'sam': ['jen'],
+  'evan': ['selam', 'jesse', 'dean'],
+  'jen':['sam', 'javier'],
+  'javier':['jen'],
+  'chris':[],
+  'jesse': ['evan'],
+};
+
+
+function bfsSearch(adjacencyList, startingValue, targetValue) {
+    if(!adjacencyList[startingValue].length) return null;
+    let visited = new Set();
+    let distance = 0;
+    let queue = [startingValue];
+
+    while(queue.length) {
+        let node = queue.shift();
+        if(visited.has(node)) continue;
+        visited.add(node);
+        if(node === targetValue) return distance;
+        distance++;
+        let neighbors = adjacencyList[node];
+        queue.push(...neighbors)
+    }
+    return null;
+}
+
+// console.log(bfsSearch(adjacencyList, 'joe', 'jesse'))
+
+
+// ## Problem 2: Depth First Search on a Graph
+// Given the adjacency list below, which friends would Joe visit if he were
+// trying to get to Jesse using Depth-First Traversal?
+// NOTE: your function should return a list of friends visited, not including Joe
+// himself.
+// ```javascript
+// const adjacencyList = {
+//   'derek':['selam', 'dean'],
+//   'joe':['selam'],
+//   'selam': ['derek', 'joe', 'dean', 'evan'],
+//   'dean': ['derek', 'evan', 'selam'],
+//   'sam': ['jen'],
+//   'evan': ['selam', 'jesse', 'dean'],
+//   'jen':['sam', 'javier'],
+//   'javier':['jen'],
+//   'chris':[],
+//   'jesse': ['evan'],
+// };
+
+function dfsSearch(adjacencyList, start, target) {
+  let stack = [start];
+  if(!adjacencyList[start].length || !adjacencyList[target].length) return [];
+  let visited = new Set();
+
+  while(stack.length){
+    let current = stack.pop();
+    if(visited.has(current)) continue;
+    if(current === target) break;
+    visited.add(current);
+    let neighbors = adjacencyList[current];
+    stack.push(...neighbors);
+  }
+  let result = Array.from(visited)
+  return result;
+}
+
+// console.log(dfsSearch(adjacencyList, 'joe', 'jesse'));
+
+// ## Problem 3: Path Sum of Binary Tree
+// Given the binary tree below and a sum, determine if the tree has a root-to-leaf
+// path such that adding up all the values along the path equals the given sum.
+// Return a boolean if you find a path.
+// Example:
+// pathSum(5, 22) where 5 is the root node and 22 is the sum => True
+// explanation - 5 + 4 + 11 + 2 = 22
+// ```js
+// //       5
+// //      / \
+// //     4   8
+// //    /   / \
+// //   11  13  4
+// //  /  \      \
+// // 7    2      1
+// ```
